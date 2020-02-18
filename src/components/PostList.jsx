@@ -34,7 +34,7 @@ const testPosts = [
 
 const sortList = (list) => {
   let sorty = list.sort(function (a, b) {
-    return a.likes - b.likes;
+    return b.likes - a.likes;
   });
 return sorty;
 }
@@ -47,6 +47,7 @@ class PostList extends React.Component {
     this.state ={
       testPosts: testPosts
     }
+    this.pleaseWork = this.pleaseWork.bind(this);
   }
 
   pleaseWork = (id) => {
@@ -58,15 +59,14 @@ class PostList extends React.Component {
       }
       return p;
     });
-    console.log('testlist',this.state.testPosts);
-    console.log();
-    this.setState({})
+    const sortedList = sortList(newList);
+    this.setState({testPosts: sortedList})
   }
 
   render () {
     return(
       <div>
-        {testPosts.map((p, i) => (
+        {this.state.testPosts.map((p, i) => (
           <Post
             title={p.title}
             content={p.content}
