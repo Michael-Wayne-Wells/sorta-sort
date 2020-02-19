@@ -1,36 +1,9 @@
 import React from 'react';
 import Post from './Post';
 import LikeCounter from './LikeCounter';
+import PropTypes from 'prop-types';
 
-const testPosts = [
-  {
-    title: 'Sup mayne',
-    content: 'Well you know like whatever. Bacon ipsum dolor amet tri-tip ribeye hamburger kielbasa turducken jowl doner tenderloin strip steak brisket capicola sirloin ground round picanha tail. Leberkas frankfurter ham hock swine pork chop, andouille spare ribs venison ball tip jerky pork beef ribs.',
-    timestamp: Date(),
-    likes: 0,
-    id: 0
-  },
-  {
-    title: 'I am so smart. S-M-R-T. I mean S-M-A-R-T',
-    content: `If one examines Lacanist obscurity, one is faced with a choice: either
-    reject socialist realism or conclude that the raison d’etre of the participant
-    is significant form. Therefore, cultural appropriation suggests that reality
-    must come from communication.`,
-    timestamp: Date(),
-    likes: 0,
-    id: 1
-  },
-  {
-    title: 'Saucy',
-    content: `“Sexual identity is unattainable,” says Debord. An abundance of discourses
-    concerning the role of the artist as reader exist. But the subject is
-    interpolated into a subconceptual paradigm of discourse that includes truth as
-    a paradox.`,
-    timestamp: Date(),
-    likes: 0,
-    id: 2
-  },
-]
+
 
 const sortList = (list) => {
   let sorty = list.sort(function (a, b) {
@@ -45,13 +18,13 @@ class PostList extends React.Component {
   constructor(props){
     super(props);
     this.state ={
-      testPosts: testPosts
+      postsFeed: this.props.feed
     }
     this.pleaseWork = this.pleaseWork.bind(this);
   }
 
   pleaseWork = (id) => {
-    let newList = [...this.state.testPosts];
+    let newList = [...this.props.feed];
 
     newList.map((p) => {
       if (p.id === parseInt(id)) {
@@ -60,13 +33,14 @@ class PostList extends React.Component {
       return p;
     });
     const sortedList = sortList(newList);
-    this.setState({testPosts: sortedList})
+    this.setState({postsFeed: sortedList})
   }
 
   render () {
+    console.log(this.props.feed, this.state.testPosts);
     return(
       <div>
-        {this.state.testPosts.map((p, i) => (
+        {this.props.feed.map((p, i) => (
           <Post
             title={p.title}
             content={p.content}
@@ -80,5 +54,9 @@ class PostList extends React.Component {
       </div>
     );
   }
+}
+
+PostList.propTypes = {
+  feed: PropTypes.array
 }
 export default PostList;
